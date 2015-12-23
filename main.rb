@@ -23,12 +23,16 @@ class GameWindow < Gosu::Window
 		if Gosu::button_down? Gosu::KbRight then
 		  @player.run_right
 		end
+		if !(Gosu::button_down? Gosu::KbLeft or Gosu::button_down? Gosu::KbRight) then
+		  @player.stop_x
+		end
 		if Gosu::button_down? Gosu::KbSpace then
 		  @player.jump
 		end
-		@player.move(self.update_interval)
 		
+		@world.collisions(@player)
 		@world.update
+		@player.move(self.update_interval)
 	end
 
 	def draw
