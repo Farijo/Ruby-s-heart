@@ -1,40 +1,44 @@
 class Player
-  attr_reader :x
-  attr_reader :y
-  def initialize
-    @image = Gosu::Image.new("media/starfighter.bmp")
-    @x = @y = @vel_x = @vel_y = @angle = 0.0
-    @score = 0
-  end
+	attr_reader :x
+	attr_reader :y
+	def initialize
+		@image = Gosu::Image.new("media/starfighter.bmp")
+		@y_speed = @x = @y = @angle = 0.0
+		@score = 0
+	end
 
-  def warp(x, y)
-    @x, @y = x, y
-  end
+	def warp(x, y)
+		@x, @y = x, y
+		end
 
-  def turn_left
-    @angle -= 4.5
-  end
+	def run_left
+		@x -= 4
+	end
 
-  def turn_right
-    @angle += 4.5
-  end
+	def run_right
+		@x += 4
+	end
 
-  def accelerate
-    @vel_x += Gosu::offset_x(@angle, 0.5)
-    @vel_y += Gosu::offset_y(@angle, 0.5)
-  end
+	def jump
+		if @is_on_ground then
+			@y_speed = 800
+			@is_on_ground = false
+		end
+	end
 
-  def move
-    @x += @vel_x
-    @y += @vel_y
-    @x %= 640
-    @y %= 480
+	def move(update_interval)
+		@y -= @y_speed * (update_interval/1000.0)
+		@y_speed -= 50
+		
+		if @y > 480-@image.height/2 then
+			@y = 480-@image.height/2
+			@is_on_ground = true
+		end
+		
+		@x %= 640
+	end
 
-    @vel_x *= 0.95
-    @vel_y *= 0.95
-  end
-
-  def draw(p_x,p_y)
-    @image.draw_rot(p_x, p_y, 1, @angle)
-  end
+	def draw(p_x,p_y)
+		@image.draw_rot(@x, @y, 1, @angle)
+	end
 end
