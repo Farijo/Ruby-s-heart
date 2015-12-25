@@ -45,7 +45,7 @@ class Player
 		@y_speed -= 50
 		
 		@x %= 640
-		#@y %= 480
+		# @y %= 480
 	end
 
 	def draw(p_x,p_y)
