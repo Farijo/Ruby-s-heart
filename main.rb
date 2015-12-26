@@ -5,13 +5,15 @@ load 'player.rb'
 
 class GameWindow < Gosu::Window
 	def initialize
-		super 640, 480
+		@half_width = 320
+		@half_height = 240
+		super @half_width*2, @half_height*2
 		self.caption = "Ruby's heart"
 		
 		@background_image = Gosu::Image.new("media/space.png", :tileable => true)
 		
 		@player = Player.new
-		@player.warp(320, 480)
+		@player.warp(@half_width, @half_height)
 		
 		@world = World.new
 	end
@@ -37,7 +39,7 @@ class GameWindow < Gosu::Window
 
 	def draw
 		@background_image.draw(0, 0, 0)
-		@player.draw(320, 240)
+		@player.draw(@half_width, @half_height)
 		@world.draw
 	end
 
