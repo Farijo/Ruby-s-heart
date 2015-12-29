@@ -12,20 +12,20 @@ class GameWindow < Gosu::Window
 		
 		@background_image = Gosu::Image.new("media/space.png", :tileable => true)
 		
-		@player = Player.new
+		@player = Player.new(self.update_interval)
 		@player.warp(@half_width, @half_height)
 		
 		@world = World.new
 	end
 
-	def update    
+	def update
 		if Gosu::button_down? Gosu::KbLeft then
 		  @player.run_left
 		end
 		if Gosu::button_down? Gosu::KbRight then
 		  @player.run_right
 		end
-		if !(Gosu::button_down? Gosu::KbLeft or Gosu::button_down? Gosu::KbRight) then
+		if !Gosu::button_down? Gosu::KbLeft and !Gosu::button_down? Gosu::KbRight then
 		  @player.stop_x
 		end
 		if Gosu::button_down? Gosu::KbSpace then
@@ -34,21 +34,21 @@ class GameWindow < Gosu::Window
 		
 		@world.collisions(@player)
 		@world.update
-		@player.move(self.update_interval)
+		@player.move
 	end
 
 	def draw
 		@background_image.draw(0, 0, 0)
-		@player.draw(@half_width, @half_height)
+		@player.draw
 		@world.draw
 	end
 
 	def button_down(id)
-		if id == Gosu::KbEscape
+		if id == Gosu::KbEscape then
 			close
 		end
 	end
-  
+	
 	def needs_cursor?
 		true
 	end

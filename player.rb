@@ -1,9 +1,10 @@
 class Player
 	attr_reader :x
 	attr_accessor :y
-	def initialize
+	def initialize(update_interval)
 		@image = Gosu::Image.new("media/starfighter.bmp")
 		@x_speed = @y_speed = @x = @y = @angle = 0.0
+		@interval = update_interval/1000.0
 	end
 
 	def warp(x, y)
@@ -33,22 +34,22 @@ class Player
 		end
 	end
 
-	def move(update_interval)
-		@y -= @y_speed * (update_interval/1000.0)
-		@x += @x_speed * (update_interval/1000.0)
+	def move
+		@y -= @y_speed * @interval
+		@x += @x_speed * @interval
 		
-		if @y > 480 then
-			@y = 480
+		if @y > (480-@image.height) then
+			@y = 480-@image.height
 			@is_on_ground = true
 		end
 		
 		@y_speed -= 50
 		
 		@x %= 640
-		# @y %= 480
+		@y %= 480
 	end
 
-	def draw(p_x,p_y)
-		@image.draw_rot(@x, @y, 1, @angle)
+	def draw
+		@image.draw(@x, @y, 1)
 	end
 end
