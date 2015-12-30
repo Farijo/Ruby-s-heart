@@ -1,8 +1,10 @@
+$FOLDER = File.dirname(__FILE__)
+
 class Player
 	attr_reader :x
 	attr_accessor :y
 	def initialize(update_interval)
-		@image = Gosu::Image.new("media/starfighter.bmp")
+		@image = Gosu::Image.new($FOLDER+"/media/starfighter.bmp")
 		@x_speed = @y_speed = @x = @y = @angle = 0.0
 		@interval = update_interval/1000.0
 	end

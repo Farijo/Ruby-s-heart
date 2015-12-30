@@ -1,7 +1,9 @@
 require 'gosu'
 
-load 'world.rb'
-load 'player.rb'
+$FOLDER = File.dirname(__FILE__)
+
+require $FOLDER+'/world.rb'
+require $FOLDER+'/player.rb'
 
 class GameWindow < Gosu::Window
 	def initialize
@@ -10,7 +12,7 @@ class GameWindow < Gosu::Window
 		super @half_width*2, @half_height*2
 		self.caption = "Ruby's heart"
 		
-		@background_image = Gosu::Image.new("media/space.png", :tileable => true)
+		@background_image = Gosu::Image.new($FOLDER+"/media/space.png", :tileable => true)
 		
 		@player = Player.new(self.update_interval)
 		@player.warp(@half_width, @half_height)
@@ -19,18 +21,10 @@ class GameWindow < Gosu::Window
 	end
 
 	def update
-		if Gosu::button_down? Gosu::KbLeft then
-		  @player.run_left
-		end
-		if Gosu::button_down? Gosu::KbRight then
-		  @player.run_right
-		end
-		if !Gosu::button_down? Gosu::KbLeft and !Gosu::button_down? Gosu::KbRight then
-		  @player.stop_x
-		end
-		if Gosu::button_down? Gosu::KbSpace then
-		  @player.jump
-		end
+		@player.run_right if Gosu::button_down? Gosu::KbRight
+		@player.run_left if Gosu::button_down? Gosu::KbLeft
+		@player.stop_x if !Gosu::button_down? Gosu::KbLeft and !Gosu::button_down? Gosu::KbRight
+		@player.jump if Gosu::button_down? Gosu::KbSpace
 		
 		@world.collisions(@player)
 		@world.update
