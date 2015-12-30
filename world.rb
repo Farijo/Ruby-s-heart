@@ -24,9 +24,9 @@ class World
 		@entities.each { |a| a.update }
 	end
 
-	def draw(x, y)
-	print @ground[0][0][0]-x," ",@ground[0][0][1]-y,"\n"
-		@ground.each { |line| line.each { |data| @ground_tiles[data[2]].draw(data[0]-x, data[1]-y, 0) } }
+	def draw(x, y, mid_x, mid_y)
+	print x," ",y,"\n"
+		@ground.each { |line| line.each { |data| @ground_tiles[data[2]].draw(data[0]-x+mid_x, data[1]-y+mid_y, 0) } }
 		
 		@entities.each { |a| a.update }
 	end

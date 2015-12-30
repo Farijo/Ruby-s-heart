@@ -10,7 +10,6 @@ class Player
 	end
 
 	def warp(x, y)
-		@x, @y = x, y
 		@x_middle, @y_middle = x-@image.width/2, y-@image.height/2
 		end
 
@@ -41,15 +40,19 @@ class Player
 		@y -= @y_speed * @interval
 		@x += @x_speed * @interval
 		
-		if @y > (480-@image.height) then
-			@y = 480-@image.height
+		if @y > 0.0 then
+			@y = 0.0
 			@is_on_ground = true
+		end
+		
+		if @x < 0.0 then
+			@x = 0.0
 		end
 		
 		@y_speed -= 50
 		
-		@x %= 640
-		@y %= 480
+		/@x %= 640
+		@y %= 480/
 	end
 
 	def draw
