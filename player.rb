@@ -11,6 +11,7 @@ class Player
 
 	def warp(x, y)
 		@x, @y = x, y
+		@x_middle, @y_middle = x-@image.width/2, y-@image.height/2
 		end
 
 	def run_left
@@ -52,6 +53,6 @@ class Player
 	end
 
 	def draw
-		@image.draw(@x, @y, 1)
+		@image.draw(@x_middle, @y_middle, 1)
 	end
 end

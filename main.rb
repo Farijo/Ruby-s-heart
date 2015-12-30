@@ -34,7 +34,7 @@ class GameWindow < Gosu::Window
 	def draw
 		@background_image.draw(0, 0, 0)
 		@player.draw
-		@world.draw
+		@world.draw(@player.x,@player.y)
 	end
 
 	def button_down(id)
