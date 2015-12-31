@@ -26,9 +26,9 @@ class GameWindow < Gosu::Window
 		@player.stop_x if !Gosu::button_down? Gosu::KbLeft and !Gosu::button_down? Gosu::KbRight
 		@player.jump if Gosu::button_down? Gosu::KbSpace
 		
-		@world.collisions(@player)
-		@world.update
 		@player.move
+		@world.update
+		@world.collisions(@player)
 	end
 
 	def draw

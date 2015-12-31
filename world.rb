@@ -11,13 +11,12 @@ class World
 			for j in 0..10
 				u << [i*50,j*50,rand(@ground_tiles.size+1)]
 			end
-			u.delete_if { |data| data[2]==@ground_tiles.size }
 			@ground << u
 		end
 	end
 	
 	def collisions(player)
-		
+		@ground[player.x/50].each { |data| if player.y>data[1] and data[2]!=@ground_tiles.size then player.land(data[1]); break end }
 	end
 	
 	def update
@@ -25,9 +24,8 @@ class World
 	end
 
 	def draw(x, y, mid_x, mid_y)
-	print x," ",y,"\n"
-		@ground.each { |line| line.each { |data| @ground_tiles[data[2]].draw(data[0]-x+mid_x, data[1]-y+mid_y, 0) } }
+		@ground.each { |line| line.each { |data| @ground_tiles[data[2]].draw(data[0]-x+mid_x, data[1]-y+mid_y, 0) if data[2]!=@ground_tiles.size } }
 		
-		@entities.each { |a| a.update }
+		@entities.each { |a| a.draw }
 	end
 end

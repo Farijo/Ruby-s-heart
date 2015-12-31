@@ -29,6 +29,11 @@ class Player
 		@y_speed = 0
 	end
 	
+	def land(y)
+		@y = y
+		@is_on_ground = true
+	end
+	
 	def jump
 		if @is_on_ground then
 			@y_speed = 800
@@ -40,19 +45,13 @@ class Player
 		@y -= @y_speed * @interval
 		@x += @x_speed * @interval
 		
-		if @y > 0.0 then
-			@y = 0.0
-			@is_on_ground = true
-		end
-		
 		if @x < 0.0 then
 			@x = 0.0
 		end
 		
-		@y_speed -= 50
-		
-		/@x %= 640
-		@y %= 480/
+		if !@is_on_ground then
+			@y_speed -= 50
+		end
 	end
 
 	def draw
