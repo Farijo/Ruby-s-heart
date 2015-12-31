@@ -16,7 +16,7 @@ class World
 	end
 	
 	def collisions(player)
-		@ground[player.x/50].each { |data| if player.y>data[1] and data[2]!=@ground_tiles.size then player.land(data[1]); break end }
+		@ground[player.x/50].each { |data| if player.y_down>=data[1] and data[2]!=@ground_tiles.size then player.land(data[1]); break end }
 	end
 	
 	def update
