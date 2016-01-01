@@ -26,7 +26,7 @@ class World
 													
 													if y_diff.abs <= @square_size and x_diff.abs <= @square_size then
 														if 0<y_diff and y_diff<=@square_size then
-															player.land(data[1])
+															player.land(data[1]-1)
 															next
 														else
 															if -@square_size<=y_diff and y_diff<0 then
@@ -34,11 +34,11 @@ class World
 																next
 															end
 														end
-														if 0<x_diff and x_diff<=@square_size then
-															player.hit_side_right(data[0])
+														if 0<x_diff and x_diff<@square_size then
+															player.hit_side_right(data[0]-1)
 														else
-															if -@square_size<=x_diff and x_diff<0 then
-																player.hit_side_left(data[0]+@square_size)
+															if -@square_size<x_diff and x_diff<0 then
+																player.hit_side_left(data[0]+@square_size+1)
 															end
 														end
 													end } }

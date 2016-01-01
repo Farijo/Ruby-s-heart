@@ -24,7 +24,6 @@ class GameWindow < Gosu::Window
 		@player.run_right if Gosu::button_down? Gosu::KbRight
 		@player.run_left if Gosu::button_down? Gosu::KbLeft
 		@player.stop_x if !Gosu::button_down? Gosu::KbLeft and !Gosu::button_down? Gosu::KbRight
-		@player.jump if Gosu::button_down? Gosu::KbSpace
 		
 		@player.move
 		@world.update
@@ -42,6 +41,10 @@ class GameWindow < Gosu::Window
 	def button_down(id)
 		if id == Gosu::KbEscape then
 			close
+		else
+			if id== Gosu::KbSpace then
+				@player.jump
+			end
 		end
 	end
 	
