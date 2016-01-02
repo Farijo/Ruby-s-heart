@@ -7,6 +7,7 @@ class Player
 		@image_half_width = @image.width/2
 		@image_half_height = @image.height/2
 		@x_speed = @y_speed = @x = @y = 0
+		@x = 100
 		@interval = update_interval/1000.0
 	end
 
@@ -28,6 +29,10 @@ class Player
 
 	def stop_y
 		@y_speed = 0
+	end
+	
+	def fall
+		@is_on_ground = false
 	end
 	
 	def land(y)
@@ -59,7 +64,7 @@ class Player
 			@x = 0
 		end
 		
-		@y_speed -= 40
+		@y_speed -= 40 if !@is_on_ground
 	end
 
 	def draw

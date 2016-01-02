@@ -28,8 +28,6 @@ class GameWindow < Gosu::Window
 		@player.move
 		@world.update
 		@world.collisions(@player)
-		
-		print @player.x," ",@player.y,"\n"
 	end
 
 	def draw
