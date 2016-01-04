@@ -9,6 +9,7 @@ class Player
 		@x_speed = @y_speed = @x = @y = 0
 		@x = 100
 		@interval = update_interval/1000.0
+		@is_on_ground = false
 	end
 
 	def warp(x, y)
@@ -29,6 +30,10 @@ class Player
 
 	def stop_y
 		@y_speed = 0
+	end
+	
+	def is_falling
+		return !@is_on_ground
 	end
 	
 	def fall

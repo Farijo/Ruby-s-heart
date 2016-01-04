@@ -65,6 +65,8 @@ class World
 			end
 		end		
 
+		if player.is_falling then
+		
 		if b_bas_gauche or b_bas_droite then
 			player.land(bot-50)
 		else
@@ -80,6 +82,27 @@ class World
 		
 		if b_gauche or b_droite
 			player.stop_y
+		end
+		
+		else
+		
+		if b_gauche then
+			player.hit_side_left(right-50)
+		end
+		if b_droite then
+			player.hit_side_right(right-50)
+		end
+		
+		if b_bas_gauche or b_bas_droite then
+			player.land(bot-50)
+		else
+			player.fall
+		end
+		
+		if b_gauche or b_droite
+			player.stop_y
+		end
+		
 		end
 		
 		/@ground.each { |line| line.each { |data|	next if data[2]==@ground_tiles.size
