@@ -63,11 +63,9 @@ class World
 			else
 				b_bas_droite = @ground[droite][bas][2]!=@ground_tiles.size
 			end
-		end		
-
-		if player.is_falling then
+		end
 		
-		if b_bas_gauche or b_bas_droite then
+		/if b_bas_gauche or b_bas_droite then
 			player.land(bot-50)
 		else
 			player.fall
@@ -84,25 +82,58 @@ class World
 			player.stop_y
 		end
 		
-		else
+		if (b_gauche and b_droite and b_bas_gauche and b_bas_droite) or (b_gauche and !b_droite and !b_bas_gauche and b_bas_droite) or (!b_gauche and b_droite and b_bas_gauche and !b_bas_droite)
+			exit
+		end/
 		
-		if b_gauche then
-			player.hit_side_left(right-50)
-		end
-		if b_droite then
-			player.hit_side_right(right-50)
-		end
+		code = 0
+		code += 1 if b_gauche
+		code += 2 if b_droite
+		code += 4 if b_bas_gauche
+		code += 8 if b_bas_droite
 		
-		if b_bas_gauche or b_bas_droite then
-			player.land(bot-50)
-		else
+		case code
+		when 0
 			player.fall
-		end
-		
-		if b_gauche or b_droite
+		when 1
+			print "1\n"
+		when 2
+			print "2\n"
+		when 3
 			player.stop_y
-		end
-		
+			player.fall
+		when 4
+			print "4\n"
+		when 5
+			player.fall
+			player.hit_side_left(right-50)
+		when 6
+			exit
+		when 7
+			player.stop_y
+			player.fall
+			player.hit_side_left(right-50)
+		when 8
+			print "8\n"
+		when 9
+			exit
+		when 10
+			player.fall
+			player.hit_side_right(right-50)
+		when 11
+			player.stop_y
+			player.fall
+			player.hit_side_right(right-50)
+		when 12
+			player.land(bot-50)
+		when 13
+			player.hit_side_left(right-50)
+			player.land(bot-50)
+		when 14
+			player.hit_side_right(right-50)
+			player.land(bot-50)
+		when 15
+			exit
 		end
 		
 		/@ground.each { |line| line.each { |data|	next if data[2]==@ground_tiles.size
