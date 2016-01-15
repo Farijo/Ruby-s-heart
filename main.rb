@@ -13,6 +13,7 @@ class GameWindow < Gosu::Window
 		self.caption = "Ruby's heart"
 		
 		@background_image = Gosu::Image.new($FOLDER+"/media/space.png", :tileable => true)
+		@UI_image = Gosu::Image.new($FOLDER+"/media/UI_element.png", :tileable => true)
 		
 		@player = Player.new(self.update_interval)
 		@player.warp(@half_width, @half_height)
@@ -34,6 +35,7 @@ class GameWindow < Gosu::Window
 		@background_image.draw(0, 0, 0)
 		@player.draw
 		@world.draw(@player.x, @player.y, @half_width, @half_height)
+		@UI_image.draw(0, 0, 2)
 	end
 
 	def button_down(id)

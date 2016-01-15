@@ -18,7 +18,6 @@ class World
 	end
 	
 	def collisions(player)
-		#@ground[player.x/50].each { |data| if player.y_down>=data[1] and data[2]!=@ground_tiles.size then player.land(data[1]); break end }
 		
 		right = (player.x+25)+50-(player.x+25)%50
 		bot = (player.y+25)+50-(player.y+25)%50
@@ -108,7 +107,8 @@ class World
 			player.fall
 			player.hit_side_left(right-50)
 		when 6
-			exit
+			print "6 exit\n"
+			#exit
 		when 7
 			player.stop_y
 			player.fall
@@ -116,7 +116,8 @@ class World
 		when 8
 			print "8\n"
 		when 9
-			exit
+			print "9 exit\n"
+			#exit
 		when 10
 			player.fall
 			player.hit_side_right(right-50)
@@ -133,32 +134,9 @@ class World
 			player.hit_side_right(right-50)
 			player.land(bot-50)
 		when 15
-			exit
+			print "15 exit\n"
+			#exit
 		end
-		
-		/@ground.each { |line| line.each { |data|	next if data[2]==@ground_tiles.size
-													x_diff = data[0]+@square_size2-player.x
-													y_diff = data[1]+@square_size2-player.y
-													
-													
-													if y_diff.abs < @square_size then
-														if 0<x_diff and x_diff<@square_size then
-															player.hit_side_right(data[0]-1)
-														else
-															if -@square_size<x_diff and x_diff<0 then
-																player.hit_side_left(data[0]+@square_size+1)
-															end
-														end
-													end
-													if x_diff.abs < @square_size then
-														if 0<y_diff and y_diff<=@square_size then
-															player.land(data[1]-1)
-														else
-															if -@square_size<y_diff and y_diff<0 then
-																player.stop_y
-															end
-														end
-													end } }/
 	end
 	
 	def update
