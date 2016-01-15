@@ -32,6 +32,9 @@ class Player
 		@y_speed = 0
 	end
 	
+	def get_direction
+	end
+	
 	def is_falling
 		return !@is_on_ground
 	end
