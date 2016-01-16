@@ -27,6 +27,9 @@ class World
 		haut = bas-1
 		gauche = droite-1
 		
+		intersec_x = right-50
+		intersec_y = bot-50
+		
 		b_gauche = true
 		b_droite = true
 		b_bas_gauche = true
@@ -91,51 +94,59 @@ class World
 		code += 4 if b_bas_gauche
 		code += 8 if b_bas_droite
 		
+		print code, " \n"
+		
 		case code
 		when 0
 			player.fall
 		when 1
-			print "1\n"
 		when 2
-			print "2\n"
 		when 3
-			player.stop_y
-			player.fall
+			player.hit_side_top(intersec_y)
 		when 4
-			print "4\n"
 		when 5
 			player.fall
-			player.hit_side_left(right-50)
+			player.hit_side_left(intersec_x)
 		when 6
-			print "6 exit\n"
-			#exit
+			if player.x <= intersec_x and player.y <= intersec_y then
+				player.hit_side_right(intersec_x)
+				player.land(intersec_y)
+			else
+				if player.x >= intersec_x and player.y >= intersec_y then
+					player.hit_side_top(intersec_y)
+					player.hit_side_left(intersec_x)
+				end
+			end
 		when 7
-			player.stop_y
-			player.fall
-			player.hit_side_left(right-50)
+			player.hit_side_top(intersec_y)
+			player.hit_side_left(intersec_x)
 		when 8
-			print "8\n"
 		when 9
-			print "9 exit\n"
-			#exit
+			if player.x >= intersec_x and player.y <= intersec_y then
+				player.hit_side_left(intersec_x)
+				player.land(intersec_y)
+			else
+				if player.x <= intersec_x and player.y >= intersec_y then
+					player.hit_side_top(intersec_y)
+					player.hit_side_right(intersec_x)
+				end
+			end
 		when 10
 			player.fall
-			player.hit_side_right(right-50)
+			player.hit_side_right(intersec_x)
 		when 11
-			player.stop_y
-			player.fall
-			player.hit_side_right(right-50)
+			player.hit_side_top(intersec_y)
+			player.hit_side_right(intersec_x)
 		when 12
-			player.land(bot-50)
+			player.land(intersec_y)
 		when 13
-			player.hit_side_left(right-50)
-			player.land(bot-50)
+			player.hit_side_left(intersec_x)
+			player.land(intersec_y)
 		when 14
-			player.hit_side_right(right-50)
-			player.land(bot-50)
+			player.hit_side_right(intersec_x)
+			player.land(intersec_y)
 		when 15
-			print "15 exit\n"
-			#exit
+			exit
 		end
 	end
 	

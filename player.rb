@@ -27,17 +27,6 @@ class Player
 	def stop_x
 		@x_speed = 0
 	end
-
-	def stop_y
-		@y_speed = 0
-	end
-	
-	def get_direction
-	end
-	
-	def is_falling
-		return !@is_on_ground
-	end
 	
 	def fall
 		@is_on_ground = false
@@ -47,6 +36,12 @@ class Player
 		@y = y-@image_half_height
 		@y_speed = 0
 		@is_on_ground = true
+	end
+	
+	def hit_side_top(y)
+		@y = y+@image_half_height
+		@y_speed = 0
+		@is_on_ground = false
 	end
 	
 	def hit_side_left(x)
