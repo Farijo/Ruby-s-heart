@@ -13,7 +13,7 @@ class GameWindow < Gosu::Window
 		self.caption = "Ruby's heart"
 		
 		@background_image = Gosu::Image.new($FOLDER+"/media/space.png", :tileable => true)
-		@UI_image = Gosu::Image.new($FOLDER+"/media/UI_element.png", :tileable => true)
+		@UI_image = Gosu::Image.new($FOLDER+"/media/UI_element_whitefill_large.png", :tileable => true)
 		
 		@player = Player.new(self.update_interval)
 		@player.warp(@half_width, @half_height)

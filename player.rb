@@ -8,6 +8,7 @@ class Player
 		@image_half_height = @image.height/2
 		@x_speed = @y_speed = @x = @y = 0
 		@x = 100
+		@old_x = 100
 		@interval = update_interval/1000.0
 		@is_on_ground = false
 	end
@@ -68,6 +69,12 @@ class Player
 		end
 		
 		@y_speed -= 40 if !@is_on_ground
+		
+		if (@old_x - @x).abs>10 then
+			print "jump\n"
+		end
+		print @old_x, " ", @x, "\n"
+		@old_x = @x
 	end
 
 	def draw

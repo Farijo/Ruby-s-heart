@@ -67,43 +67,38 @@ class World
 			end
 		end
 		
-		/if b_bas_gauche or b_bas_droite then
-			player.land(bot-50)
-		else
-			player.fall
-		end
-		
-		if b_gauche then
-			player.hit_side_left(right-50)
-		end
-		if b_droite then
-			player.hit_side_right(right-50)
-		end
-		
-		if b_gauche or b_droite
-			player.stop_y
-		end
-		
-		if (b_gauche and b_droite and b_bas_gauche and b_bas_droite) or (b_gauche and !b_droite and !b_bas_gauche and b_bas_droite) or (!b_gauche and b_droite and b_bas_gauche and !b_bas_droite)
-			exit
-		end/
-		
 		code = 0
 		code += 1 if b_gauche
 		code += 2 if b_droite
 		code += 4 if b_bas_gauche
 		code += 8 if b_bas_droite
 		
-		print code, " \n"
-		
 		case code
 		when 0
 			player.fall
 		when 1
+			if (player.x - intersec_x).abs < (player.y - intersec_y).abs then
+				player.hit_side_top(intersec_y)
+			else
+				player.fall
+				player.hit_side_left(intersec_x)
+			end
 		when 2
+			if (player.x - intersec_x).abs < (player.y - intersec_y).abs then
+				player.hit_side_top(intersec_y)
+			else
+				player.fall
+				player.hit_side_right(intersec_x)
+			end
 		when 3
 			player.hit_side_top(intersec_y)
 		when 4
+			if (player.x - intersec_x).abs <= (player.y - intersec_y).abs then
+				player.land(intersec_y)
+			else
+				player.fall
+				player.hit_side_left(intersec_x)
+			end
 		when 5
 			player.fall
 			player.hit_side_left(intersec_x)
@@ -121,6 +116,12 @@ class World
 			player.hit_side_top(intersec_y)
 			player.hit_side_left(intersec_x)
 		when 8
+			if (player.x - intersec_x).abs <= (player.y - intersec_y).abs then
+				player.land(intersec_y)
+			else
+				player.fall
+				player.hit_side_right(intersec_x)
+			end
 		when 9
 			if player.x >= intersec_x and player.y <= intersec_y then
 				player.hit_side_left(intersec_x)
