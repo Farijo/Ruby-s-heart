@@ -93,11 +93,11 @@ class World
 		when 3
 			player.hit_side_top(intersec_y)
 		when 4
-			if (player.x - intersec_x).abs <= (player.y - intersec_y).abs then
-				player.land(intersec_y)
-			else
+			if (intersec_x - player.x) <= (player.y - intersec_y) then
 				player.fall
 				player.hit_side_left(intersec_x)
+			else
+				player.land(intersec_y)
 			end
 		when 5
 			player.fall
@@ -116,11 +116,11 @@ class World
 			player.hit_side_top(intersec_y)
 			player.hit_side_left(intersec_x)
 		when 8
-			if (player.x - intersec_x).abs <= (player.y - intersec_y).abs then
-				player.land(intersec_y)
-			else
+			if (player.x - intersec_x) <= (player.y - intersec_y) then
 				player.fall
 				player.hit_side_right(intersec_x)
+			else
+				player.land(intersec_y)
 			end
 		when 9
 			if player.x >= intersec_x and player.y <= intersec_y then
