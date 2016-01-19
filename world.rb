@@ -1,17 +1,17 @@
 $FOLDER = File.dirname(__FILE__)
 
+require $FOLDER+'/data_const.rb'
+
 class World
 	def initialize
-		@square_size = 50
-		@square_size2 = @square_size/2
-		@ground_tiles = Gosu::Image::load_tiles($FOLDER+"/media/ground.png", @square_size, @square_size, :tileable => true)
+		@ground_tiles = Gosu::Image::load_tiles($FOLDER+"/media/ground.png", GROUND_TILES_SIZE, GROUND_TILES_SIZE, :tileable => true)
 		@entities = Array.new
 		@ground = Array.new
 		
 		for i in 0..13
 			u = Array.new
 			for j in 0..10
-				u << [i*@square_size,j*@square_size,rand(@ground_tiles.size+1)]
+				u << [i*GROUND_TILES_SIZE,j*GROUND_TILES_SIZE,rand(@ground_tiles.size+1)]
 			end
 			@ground << u
 		end
@@ -19,16 +19,16 @@ class World
 	
 	def collisions(player)
 		
-		right = (player.x+25)+50-(player.x+25)%50
-		bot = (player.y+25)+50-(player.y+25)%50
+		right = (player.x+GROUND_TILES_HALF_SIZE)+GROUND_TILES_SIZE-(player.x+GROUND_TILES_HALF_SIZE)%GROUND_TILES_SIZE
+		bot = (player.y+GROUND_TILES_HALF_SIZE)+GROUND_TILES_SIZE-(player.y+GROUND_TILES_HALF_SIZE)%GROUND_TILES_SIZE
 		
-		droite = right/50-1
-		bas = bot/50-1
+		droite = right/GROUND_TILES_SIZE-1
+		bas = bot/GROUND_TILES_SIZE-1
 		haut = bas-1
 		gauche = droite-1
 		
-		intersec_x = right-50
-		intersec_y = bot-50
+		intersec_x = right-GROUND_TILES_SIZE
+		intersec_y = bot-GROUND_TILES_SIZE
 		
 		b_gauche = true
 		b_droite = true
@@ -77,18 +77,18 @@ class World
 		when 0
 			player.fall
 		when 1
-			if (player.x - intersec_x).abs < (player.y - intersec_y).abs then
-				player.hit_side_top(intersec_y)
-			else
+			if (intersec_x - player.x) <= (intersec_y - player.y) then
 				player.fall
 				player.hit_side_left(intersec_x)
+			else
+				player.hit_side_top(intersec_y)
 			end
 		when 2
-			if (player.x - intersec_x).abs < (player.y - intersec_y).abs then
-				player.hit_side_top(intersec_y)
-			else
+			if (player.x - intersec_x) <= (intersec_y - player.y) then
 				player.fall
 				player.hit_side_right(intersec_x)
+			else
+				player.hit_side_top(intersec_y)
 			end
 		when 3
 			player.hit_side_top(intersec_y)
