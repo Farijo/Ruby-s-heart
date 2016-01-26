@@ -8,13 +8,19 @@ class World
 		@entities = Array.new
 		@ground = Array.new
 		
-		for i in 0..13
+		level = File.open($FOLDER+"/level_1.rsh", "r")
+		
+		level.each_line { |line|
+			line_array = line.split(//)
 			u = Array.new
-			for j in 0..10
-				u << [i*GROUND_TILES_SIZE,j*GROUND_TILES_SIZE,rand(@ground_tiles.size+1)]
-			end
+			line_array.each { |char|
+				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,rand(@ground_tiles.size)] if char == "1"
+				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,@ground_tiles.size] if char == "0"
+			}
 			@ground << u
-		end
+		}
+		
+		level.close
 	end
 	
 	def collisions(player)
