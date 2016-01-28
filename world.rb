@@ -10,17 +10,29 @@ class World
 		
 		level = File.open($FOLDER+"/level_1.rsh", "r")
 		
-		level.each_line { |line|
-			line_array = line.split(//)
+		level_lines = level.readlines
+		
+		maxX = level_lines.size-1
+		maxY = level_lines[0].size-1
+		
+		for j in 0..maxY
 			u = Array.new
-			line_array.each { |char|
-				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,rand(@ground_tiles.size)] if char == "1"
-				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,@ground_tiles.size] if char == "0"
-			}
+			for i in 0..maxX
+				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,rand(@ground_tiles.size)] if level_lines[i].split(//)[j] == "1"
+				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,@ground_tiles.size] if level_lines[i].split(//)[j] == "0"
+			end
 			@ground << u
-		}
+		end
 		
 		level.close
+		
+		@ground.each_with_index { |line, indexY|
+			line.each_with_index { |data, indexX|
+				print indexX*GROUND_TILES_SIZE," ",data[0]," ",indexY*GROUND_TILES_SIZE," ",data[1],"\n"
+			}
+			print "\n\n"
+		}
+		
 	end
 	
 	def collisions(player)
@@ -162,7 +174,11 @@ class World
 	end
 
 	def draw(x, y, mid_x, mid_y)
-		@ground.each { |line| line.each { |data| @ground_tiles[data[2]].draw(data[0]-x+mid_x, data[1]-y+mid_y, 0) if data[2]!=@ground_tiles.size } }
+		@ground.each { |line|
+			line.each { |data|
+				@ground_tiles[data[2]].draw(data[0]-x+mid_x, data[1]-y+mid_y, 0) if data[2]!=@ground_tiles.size
+			}
+		}
 		
 		@entities.each { |a| a.draw }
 	end
