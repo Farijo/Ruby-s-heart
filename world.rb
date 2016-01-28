@@ -15,9 +15,9 @@ class World
 		maxX = level_lines.size-1
 		maxY = level_lines[0].size-1
 		
-		for j in 0..maxY
+		for i in 0..maxX
 			u = Array.new
-			for i in 0..maxX
+			for j in 0..maxY
 				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,rand(@ground_tiles.size)] if level_lines[i].split(//)[j] == "1"
 				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,@ground_tiles.size] if level_lines[i].split(//)[j] == "0"
 			end
