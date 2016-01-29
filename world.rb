@@ -13,7 +13,12 @@ class World
 		level_lines = level.readlines
 		
 		maxX = level_lines.size-1
-		maxY = level_lines[0].size-1
+		maxY = level_lines[0].size-2
+		
+		level_lis = Array.new
+		for i in 0..level_lines.size-1
+			level_lis << level_lines[i].split(//)
+		end
 		
 		for i in 0..maxY
 			u = Array.new
