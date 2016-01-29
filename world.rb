@@ -15,24 +15,16 @@ class World
 		maxX = level_lines.size-1
 		maxY = level_lines[0].size-1
 		
-		for i in 0..maxX
+		for i in 0..maxY
 			u = Array.new
-			for j in 0..maxY
-				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,rand(@ground_tiles.size)] if level_lines[i].split(//)[j] == "1"
-				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,@ground_tiles.size] if level_lines[i].split(//)[j] == "0"
+			for j in 0..maxX
+				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,rand(@ground_tiles.size)] if level_lines[j].split(//)[i] == "1"
+				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,@ground_tiles.size] if level_lines[j].split(//)[i] == "0"
 			end
 			@ground << u
 		end
 		
-		level.close
-		
-		@ground.each_with_index { |line, indexY|
-			line.each_with_index { |data, indexX|
-				print indexX*GROUND_TILES_SIZE," ",data[0]," ",indexY*GROUND_TILES_SIZE," ",data[1],"\n"
-			}
-			print "\n\n"
-		}
-		
+		level.close		
 	end
 	
 	def collisions(player)
