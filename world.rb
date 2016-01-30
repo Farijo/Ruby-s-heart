@@ -1,30 +1,43 @@
-$FOLDER = File.dirname(__FILE__)
+$FOLDER = File.dirname(__FILE__) + "/"
 
-require $FOLDER+'/data_const.rb'
+require $FOLDER+'data_const.rb'
 
 class World
 	def initialize
-		@ground_tiles = Gosu::Image::load_tiles($FOLDER+"/media/ground.png", GROUND_TILES_SIZE, GROUND_TILES_SIZE, :tileable => true)
+			# initialisation des attributs
+		@ground_tiles = Gosu::Image::load_tiles($FOLDER+"media/ground.png", GROUND_TILES_SIZE, GROUND_TILES_SIZE, :tileable => true)
 		@entities = Array.new
 		@ground = Array.new
 		
-		level = File.open($FOLDER+"/level_1.rsh", "r")
+			# lecture du fichier de niveau
+		level = File.open($FOLDER+"level_1.rsh", "r")
 		
 		level_lines = level.readlines
 		
-		maxX = level_lines.size-1
-		maxY = level_lines[0].size-2
+			# enregistrement de la taille du fichier de niveau
+		maxX = level_lines.size		# nombre de lignes
+		maxY = level_lines[0].size	# nombre de colonnes
 		
-		level_lis = Array.new
-		for i in 0..level_lines.size-1
-			level_lis << level_lines[i].split(//)
-		end
+			# conversion des lignes sous forme de chaine de caractères en tableau de caractères
+			# et verification du formatage du fichier (toutes les lignes doivent avoir la même taille)
+		level_lines_list = Array.new
+		level_lines.each { |line|
+			if line.size != maxY then
+				print "une des lignes du fichier de niveau est incorrecte\n"
+				exit
+			end
+			level_lines_list << line.split(//)
+		}
 		
+		maxX -= 1	# numéro de ligne max
+		maxY -= 2	# numéro de colonne max
+		
+			# remplissage du tableau @ground en fonction des données formatés du fichier
 		for i in 0..maxY
 			u = Array.new
 			for j in 0..maxX
-				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,rand(@ground_tiles.size)] if level_lines[j].split(//)[i] == "1"
-				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,@ground_tiles.size] if level_lines[j].split(//)[i] == "0"
+				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,rand(@ground_tiles.size)] if level_lines_list[j][i] == "1"
+				u << [@ground.size*GROUND_TILES_SIZE,u.size*GROUND_TILES_SIZE,@ground_tiles.size] if level_lines_list[j][i] == "0"
 			end
 			@ground << u
 		end

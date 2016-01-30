@@ -1,9 +1,9 @@
 require 'gosu'
 
-$FOLDER = File.dirname(__FILE__)
+$FOLDER = File.dirname(__FILE__) + "/"
 
-require $FOLDER+'/world.rb'
-require $FOLDER+'/player.rb'
+require $FOLDER+'world.rb'
+require $FOLDER+'player.rb'
 
 class GameWindow < Gosu::Window
 	def initialize
@@ -12,8 +12,8 @@ class GameWindow < Gosu::Window
 		super @half_width*2, @half_height*2
 		self.caption = "Ruby's heart"
 		
-		@background_image = Gosu::Image.new($FOLDER+"/media/space.png", :tileable => true)
-		@UI_image = Gosu::Image.new($FOLDER+"/media/UI_element_whitefill_large.png", :tileable => true)
+		@background_image = Gosu::Image.new($FOLDER+"media/space.png", :tileable => true)
+		@UI_image = Gosu::Image.new($FOLDER+"media/UI_element_whitefill_large.png", :tileable => true)
 		
 		@player = Player.new(self.update_interval)
 		@player.warp(@half_width, @half_height)

@@ -1,11 +1,11 @@
-$FOLDER = File.dirname(__FILE__)
+$FOLDER = File.dirname(__FILE__) + "/"
 
-require $FOLDER+'/data_const.rb'
+require $FOLDER+'data_const.rb'
 
 class Player
 	attr_reader :x, :y
 	def initialize(update_interval)
-		@image = Gosu::Image.new($FOLDER+"/media/starfighter.bmp")
+		@image = Gosu::Image.new($FOLDER+"media/starfighter.bmp")
 		if (@image.height != PLAYER_SIZE) or (@image.height != PLAYER_SIZE) then
 			print "character bad size\n"
 			exit
