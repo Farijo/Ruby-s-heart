@@ -3,6 +3,8 @@ $FOLDER = File.dirname(__FILE__) + "/"
 require $FOLDER+'data_const.rb'
 
 class World
+	attr_reader :start_x, :start_y
+
 	def initialize
 			# initialisation des attributs
 		@ground_tiles = Gosu::Image::load_tiles($FOLDER+"media/ground.png", GROUND_TILES_SIZE, GROUND_TILES_SIZE, :tileable => true)
@@ -11,8 +13,8 @@ class World
 		
 			# lecture du fichier de niveau
 		level = File.open($FOLDER+"level_1.rsh", "r")
-		
 		level_lines = level.readlines
+		level.close
 		
 			# enregistrement de la taille du fichier de niveau
 		maxX = level_lines.size		# nombre de lignes
@@ -42,7 +44,8 @@ class World
 			@ground << u
 		end
 		
-		level.close		
+		@start_x = 50
+		@start_y = -50
 	end
 	
 	def collisions(player)

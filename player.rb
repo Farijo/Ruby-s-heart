@@ -4,6 +4,7 @@ require $FOLDER+'data_const.rb'
 
 class Player
 	attr_reader :x, :y
+	
 	def initialize(update_interval)
 		@image = Gosu::Image.new($FOLDER+"media/starfighter.bmp")
 		if (@image.height != PLAYER_SIZE) or (@image.height != PLAYER_SIZE) then
@@ -11,13 +12,16 @@ class Player
 			exit
 		end
 		@x_speed = @y_speed = @x = @y = 0
-		@x = 100
 		@interval = update_interval/1000.0
 		@is_on_ground = false
 	end
 
 	def warp(x, y)
 		@x_middle, @y_middle = x-@image.width/2, y-@image.height/2
+	end
+	
+	def start_position(x, y)
+		@x, @y = x, y
 	end
 	
 	def run_left

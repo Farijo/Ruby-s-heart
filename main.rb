@@ -19,6 +19,8 @@ class GameWindow < Gosu::Window
 		@player.warp(@half_width, @half_height)
 		
 		@world = World.new
+		
+		@player.start_position(@world.start_x, @world.start_y)
 	end
 
 	def update
