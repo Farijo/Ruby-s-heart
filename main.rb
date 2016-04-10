@@ -7,12 +7,14 @@ require $FOLDER+'player.rb'
 
 class GameWindow < Gosu::Window
 	def initialize
-		@half_width = 320
-		@half_height = 240
+		@half_width = 640
+		@half_height = 480
 		super @half_width*2, @half_height*2
 		self.caption = "Ruby's heart"
 		
 		@background_image = Gosu::Image.new($FOLDER+"media/space.png", :tileable => true)
+		@background_x = 0;
+		@background_y = 0;
 		@UI_image = Gosu::Image.new($FOLDER+"media/UI_element_whitefill_large.png", :tileable => true)
 		
 		@player = Player.new(self.update_interval)
@@ -34,7 +36,13 @@ class GameWindow < Gosu::Window
 	end
 
 	def draw
-		@background_image.draw(0, 0, 0)
+		@background_x += (Random.new_seed%3)-1
+		@background_y += (Random.new_seed%3)-1
+		@background_x += 1 if @background_x < -10
+		@background_x -= 1 if @background_x > 10
+		@background_y += 1 if @background_y < -10
+		@background_y -= 1 if @background_y > 10
+		@background_image.draw(@background_x, @background_y, 0)
 		@player.draw
 		@world.draw(@player.x, @player.y, @half_width, @half_height)
 		@UI_image.draw(0, 0, 2)

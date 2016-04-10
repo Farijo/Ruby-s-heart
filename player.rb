@@ -25,11 +25,11 @@ class Player
 	end
 	
 	def run_left
-		@x_speed = -200
+		@x_speed = -300
 	end
 
 	def run_right
-		@x_speed = 200
+		@x_speed = 300
 	end
 	
 	def stop_x

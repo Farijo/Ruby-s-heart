@@ -6,6 +6,7 @@ $FOLDER = File.dirname(__FILE__) + "/"
 class GameWindow < Gosu::Window
 	def initialize
 		super 500,500
+		@numTile = 15
 	end
 
 	def update
@@ -13,19 +14,22 @@ class GameWindow < Gosu::Window
 	end
 
 	def draw
-		for i in 0..100
-			for j in 0..100
-				draw_line(i*50,j*50,Color::GRAY,i*50+50,j*50,Color::GRAY)
-				draw_line(i*50+50,j*50,Color::GRAY,i*50+50,j*50+50,Color::GRAY)
-				draw_line(i*50+50,j*50+50,Color::GRAY,i*50,j*50+50,Color::GRAY)
-				draw_line(i*50,j*50+50,Color::GRAY,i*50,j*50,Color::GRAY)
-			end
+		numX = width*(mouse_x*@numTile/width).to_i
+		numY = height*(mouse_y*@numTile/height).to_i
+		xX = numX/@numTile
+		yY = numY/@numTile
+		xX2 = (width+numX)/@numTile
+		yY2 = (height+numY)/@numTile
+		draw_rect(xX, yY, xX2-xX, yY2-yY,Color::RED)
+		
+		for i in 0..@numTile
+			posX = i*width
+			posY = i*height
+			draw_line(0,posY/@numTile,Color::GRAY,width,posY/@numTile,Color::GRAY)
+			draw_line(posX/@numTile,0,Color::GRAY,posX/@numTile,height,Color::GRAY)
 		end
-		
-		x = (mouse_x/50).to_i
-		y = (mouse_y/50).to_i
-		
-		draw_rect(x*50, y*50+1, 49, 49, Color::RED)
+		draw_line(0,height-1,Color::GRAY,width,height-1,Color::GRAY)
+		draw_line(1,0,Color::GRAY,1,height,Color::GRAY)
 	end
 
 	def button_down(id)
@@ -40,3 +44,4 @@ class GameWindow < Gosu::Window
 end
 
 GameWindow.new.show
+
